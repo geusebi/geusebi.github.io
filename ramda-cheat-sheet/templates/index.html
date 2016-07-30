@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=utf8>
+    <title>Ramda - cheat sheet</title>
+    <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700|PT+Mono'
+      rel='stylesheet' type='text/css'>
+    <link rel=stylesheet href=style.css>
+  </head>
+  <body>
+    <form id=search>
+      <h1>Ramdajs (version ${package['version']})</h1>
+      <label for=query>Search</label>
+      <input id=query type=text autocomplete=off autofocus/>
+    </form>
+    <main>
+      <article>
+        % for cat in categories:
+        <section>
+          <h1>${cat['name']}</h1>
+          <div class='lists-group'>
+            <% max_lines = 28 %>
+            <% count = 0 %>
+            <div class='lists'>
+              % for sub_cat in cat['content']:
+                <% count += len(sub_cat) %>
+                % if count > max_lines:
+                <% count = len(sub_cat) %>
+            </div>
+            <div class='lists'>
+                % endif
+                <ul>
+                % for item in sub_cat:
+                <li><a target=_blank 
+                       href='http://ramdajs.com/docs/#${item}'
+                       title="${descriptions[item] | h}">${item}</a>
+                % endfor 
+                </ul>
+              % endfor
+            </div>
+          </div>
+        </section>
+        % endfor
+      </article>
+    </main>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.4.1/bluebird.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.19.31/system.js'></script>
+    <script>
+      System.paths['ramda'] = 'https://cdnjs.cloudflare.com/ajax/libs/ramda/0.21.0/ramda.min.js';
+      System.paths['index'] = 'index.js';
+
+      System.import('index');
+    </script>
+
+  </body>
+</html>
